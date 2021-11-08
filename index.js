@@ -47,3 +47,7 @@ function sortByAlphabetically() {
       };
     });
 }
+
+function groupById(){
+  console.log("hello")
+}

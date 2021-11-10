@@ -35,7 +35,6 @@ function sortByAlphabetically() {
   fetch('https://jsonplaceholder.typicode.com/posts')
     .then(res => res.json())
     .then(data => {
-
       data.sort(sorting('title')); // sorting by title property
       for (const item in data) {
         const sorted = `
@@ -46,8 +45,27 @@ function sortByAlphabetically() {
         lists.insertAdjacentHTML("beforeend", sorted);
       };
     });
-}
+};
 
 function groupById(){
-  console.log("hello")
+  fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(res => res.json())
+    .then(data => {
+      // reducer method
+      const groupBy = (arr, key) => {
+        return arr.reduce((result, obj) => {
+          (result[obj[key]] = result[obj[key]] || []).push(obj);
+          return result;
+        }, {});
+      };
+      const a = groupBy(data, "userId");
+      const mappingThrough = a.map()
+      const groupingResult = `
+        <h3>Posts by User ${a[1][0].userId}</h3>
+        <p><b>Title:</b> ${a[1][0].title}</p>
+        <p>${a[1][0].body}</p>
+      `
+      lists.insertAdjacentHTML('beforeend', groupingResult)
+      console.log(a);
+      });
 }

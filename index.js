@@ -59,7 +59,6 @@ function groupById(){
         }, {});
       };
       const a = groupBy(data, "userId");
-      const mappingThrough = a.map()
       const groupingResult = `
         <h3>Posts by User ${a[1][0].userId}</h3>
         <p><b>Title:</b> ${a[1][0].title}</p>

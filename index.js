@@ -36,11 +36,11 @@ function sortByAlphabetically() {
     .then(res => res.json())
     .then(data => {
       data.sort(sorting('title')); // sorting by title property
-      for (const item in data) {
+      for (const i in data) {
         const sorted = `
-        <h3>Title: ${data[item].title}</h3>
-        <p>${data[item].body}</p>
-        <p>Posted by: User ${data[item].userId}</p>
+        <h3>Title: ${data[i].title}</h3>
+        <p>${data[i].body}</p>
+        <p>Posted by: User ${data[i].userId}</p>
         `;
         lists.insertAdjacentHTML("beforeend", sorted);
       };
@@ -51,21 +51,21 @@ function groupById(){
   fetch('https://jsonplaceholder.typicode.com/posts')
     .then(res => res.json())
     .then(data => {
-      // reducer method
-      const groupBy = (arr, key) => {
-        return arr.reduce((result, obj) => {
-          (result[obj[key]] = result[obj[key]] || []).push(obj);
-          return result;
-        }, {});
-      };
-      const a = groupBy(data, "userId");
-      const groupingResult = `
-        <h3>Posts by User ${a[1][0].userId}</h3>
-        <p><b>Title:</b> ${a[1][0].title}</p>
-        <p>${a[1][0].body}</p>
-      `
-      lists.insertAdjacentHTML('beforeend', groupingResult)
-      console.log(a);
-      });
+      // reduce method
+      const groupBy = data.reduce((r, a) => {
+        r[a.userId] = [...r[a.userId] || [], a];
+        return r;
+      }, {});
+      console.log(groupBy);
+      for (const i in groupBy) {
+        groupBy[i].forEach(e => {
+          const groupingResult = `
+          <h3>Posts by User ${e.userId}</h3>
+          <p><b>Title:</b> ${e.title}</p>
+          <p>${e.body}</p>
+          `
+          lists.insertAdjacentHTML('beforeend', groupingResult)
+        });
+      }
+    });
 }
-

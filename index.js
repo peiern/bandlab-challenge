@@ -6,12 +6,12 @@ function showList(){
     .then(res => res.json())
     .then(data => {
       // go through each of the array
-      // get the title, body and user ID
+      // get the title, body
       data.forEach(post => {
         const postLists = `
         <h3>Title: ${post.title}</h3>
           <p>${post.body}</p>
-          <p>Posted by: User ${post.userId}</p>
+        <hr>
       `;
         // insert into HTML for display
         lists.insertAdjacentHTML('beforeend', postLists);
@@ -40,7 +40,7 @@ function sortByAlphabetically() {
         const sorted = `
         <h3>Title: ${data[i].title}</h3>
         <p>${data[i].body}</p>
-        <p>Posted by: User ${data[i].userId}</p>
+        <hr>
         `;
         lists.insertAdjacentHTML("beforeend", sorted);
       };
@@ -56,13 +56,16 @@ function groupById(){
         r[a.userId] = [...r[a.userId] || [], a];
         return r;
       }, {});
-      console.log(groupBy);
+
       for (const i in groupBy) {
+        const user = `<h3>Posts by User ${groupBy[i][i].userId}</h3>`
+        lists.insertAdjacentHTML('beforeend', user)
+
         groupBy[i].forEach(e => {
           const groupingResult = `
-          <h3>Posts by User ${e.userId}</h3>
           <p><b>Title:</b> ${e.title}</p>
           <p>${e.body}</p>
+          <hr>
           `
           lists.insertAdjacentHTML('beforeend', groupingResult)
         });

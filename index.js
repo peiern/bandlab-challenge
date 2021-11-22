@@ -53,7 +53,8 @@ function groupById(){
     .then(data => {
       // reduce method
       const groupBy = data.reduce((r, a) => {
-        r[a.userId] = [...r[a.userId] || [], a];
+        r[a.userId] = r[a.userId] || [];
+        r[a.userId].push(a);
         return r;
       }, {});
 
